@@ -1,0 +1,148 @@
+{
+  "name": "workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -384,
+        -48
+      ],
+      "id": "a7f5e01c-c638-48dd-8504-597e6c4cf059",
+      "name": "When chat message received",
+      "webhookId": "f97cd445-dbdb-4165-8821-890f0fc8c238"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a snarky, humorous assistant that makes fun of whoever you are chatting with"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        96,
+        -80
+      ],
+      "id": "cb64229a-aed0-4896-8952-f9fb2b651029",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        192,
+        256
+      ],
+      "id": "e3a7f9f6-85f0-4554-a569-2c516b6d9555",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -48,
+        128
+      ],
+      "id": "68aa1672-1d81-433e-87e0-95d6c1935c43",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "atk57uRz80xnbgyw",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "symbols": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Ticker', ``, 'string') }}",
+        "filters": {
+          "latest": true
+        }
+      },
+      "type": "n8n-nodes-base.marketstackTool",
+      "typeVersion": 1,
+      "position": [
+        416,
+        128
+      ],
+      "id": "85b5e25a-1c59-4379-8698-96d589179850",
+      "name": "Get many EoD data in Marketstack",
+      "credentials": {
+        "marketstackApi": {
+          "id": "vWLNxvlXkrEJEvL8",
+          "name": "Marketstack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many EoD data in Marketstack": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "cf2c599a-1e16-4394-89d0-33e2427075e2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "155d02d48e9717a2aeb8104e228973f8267e2b423d9da7c9339b5ef1fb11b0f7"
+  },
+  "nodeGroups": [],
+  "id": "QxPhLeioEKxxe8p1",
+  "tags": []
+}
