@@ -1,0 +1,182 @@
+{
+  "name": "workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "23823a25-c03e-42e0-86e2-25f191afeaa0",
+      "name": "When chat message received",
+      "webhookId": "8ad3dd6b-43aa-406c-9650-54a1b4cc7f49"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        352,
+        0
+      ],
+      "id": "31452e20-df4b-47de-9965-a510f1b57950",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        176,
+        240
+      ],
+      "id": "6afa5ce1-8649-4deb-a37d-d0d8b1197212",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "atk57uRz80xnbgyw",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        320,
+        240
+      ],
+      "id": "027d083c-eb17-4cfc-9786-c1ad43febc75",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "filters": {
+          "receivedAfter": "={{ $now.minus(1, 'day') }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        464,
+        240
+      ],
+      "id": "c471b740-3fdb-43b4-8807-630f33b67ee4",
+      "name": "Get many messages in Gmail",
+      "webhookId": "de25d6f6-ce1d-4080-bf3e-8aaaa4101337",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iGRCVi11hQWaACGP",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To_Email', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        608,
+        240
+      ],
+      "id": "d91f25f6-8446-4e30-823a-94374bdf85eb",
+      "name": "Create a draft in Gmail",
+      "webhookId": "fb77d797-a3f5-42af-a44d-06bca2f57e02",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iGRCVi11hQWaACGP",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a draft in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "36116050-02e6-49f1-b742-a7002995eaca",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "155d02d48e9717a2aeb8104e228973f8267e2b423d9da7c9339b5ef1fb11b0f7"
+  },
+  "nodeGroups": [],
+  "id": "Wg7YhMfhgjonIdKz",
+  "tags": []
+}
