@@ -1,0 +1,168 @@
+{
+  "name": "workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "eb9710d6-de87-4a11-aba6-8bb7976b6781",
+      "name": "When chat message received",
+      "webhookId": "d7ffacd1-47c8-47cd-a62b-bcd052520504"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        352,
+        0
+      ],
+      "id": "9d6e7533-3b2f-4ebc-b7df-d0cbcf1b2190",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        192,
+        240
+      ],
+      "id": "095decd8-612b-4c48-96fa-e102129406e5",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "atk57uRz80xnbgyw",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        352,
+        240
+      ],
+      "id": "9bfa31de-8305-4338-be04-d22d91e46b5a",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "userKey": "u5yywtmycfj8z6yr7fzwatw8evnqao",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pushoverTool",
+      "typeVersion": 1,
+      "position": [
+        512,
+        240
+      ],
+      "id": "befc7b36-a6cb-4df2-be78-44b77f84545f",
+      "name": "Push a message in Pushover",
+      "credentials": {
+        "pushoverApi": {
+          "id": "RpYgoMs1h9Xbprmg",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTimeTool",
+      "typeVersion": 2,
+      "position": [
+        656,
+        240
+      ],
+      "id": "2e243677-efa5-46e3-a43f-ab45454442d9",
+      "name": "Date & Time"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Push a message in Pushover": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "332a3d66-9a07-4ef6-8ceb-ec0d05f5072c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "155d02d48e9717a2aeb8104e228973f8267e2b423d9da7c9339b5ef1fb11b0f7"
+  },
+  "nodeGroups": [],
+  "id": "iY3VKksd3GO1Hy4Z",
+  "tags": []
+}
