@@ -1,8 +1,8 @@
-# Day 8 – Building an AI-Powered Equity Portfolio Rebalancer with n8n
+# Day 7 – Building an AI-Powered Equity Portfolio Rebalancer with n8n
 
 ## 📌 Overview
 
-On Day 8, I built a more sophisticated **AI-powered business automation workflow** using **n8n**.
+On Day 7, I built a more sophisticated **AI-powered business automation workflow** using **n8n**.
 
 The project simulates an **Equity Portfolio Rebalancer** that receives a portfolio rebalancing objective through a web form and uses an AI Agent to:
 
